@@ -2,18 +2,18 @@ Memcached on YARN
 ====
 
 ## Futures ##
+* Configure alloted ram for Demon currently requires a 512mb container to function as 448mb goes to the JMemcachD Deamon
 * Getting containers that die to automatically restart
 * Understand how I can get the Application Master to restart if it dies
 * Management of the clients. Currently I have to kill clients through the YARN Cli. 
 
-      ```    
-      yarn application -kill [app#] 
-      ```
+      
+      `yarn application -kill [app#] `
+      
 
 * Adding in unit tests and sample/test applications 
 * Client Memcached system notification if a server daemon dies. 
 * Have MOYA clean things up if the AM dies or is exited. 
-* Configure alloted ram for Demon currently requires a 512mb container to function as 448mb goes to the JMemcachD Deamon
 * Configure Evition Policy, currently set as FIFO
 * Configure Number of Keys to handle, currently set at 1million per Daemon
 
@@ -21,12 +21,28 @@ Memcached on YARN
 
 ## Usage ##
 ```
-yarn jar [client jar] [clientclass] 
--jar [jar with AM (client jar)] 
--lib [runnable Server Daemon] 
--num_containers [# of Daemons to start] 
--container_memory [MB's of Ram for the YARN Container] 
--ZK [host:port comma seperated list of ZooKeeper Servers]
+yarn jar [MOYA-CLIENT jar] org.moya.core.yarn.Client 
+
+usage: Client
+ -appname <arg>            Optional: Application Name. Default value - MoYa
+ -container_memory <arg>   Recommended: Amount of memory in MB to be requested to run
+                           the shell command - Defaults to 10, Recommended is 512. 
+ -debug                    Optional: Dump out debug information
+ -help                     Optional: Print usage
+ -jar <arg>                Required: Jar file containing the application master - MOYA-CLIENT jar
+ -lib <arg>                Required: Runnable Jar with MOYA inside - MOYA-SERVER jar
+ -log_properties <arg>     Optional: log4j.properties file
+ -master_memory <arg>      Recommended: Amount of memory in MB to be requested to run
+                           the application master - Defaults to 10, Recommended is 128
+ -moya_priority <arg>      Optional: Priority for the MOYA containers - Defaults to 0
+ -num_containers <arg>     Recommended: No. of containers on which the shell command
+                           needs to be executed, Defaults to 1
+ -priority <arg>           Optional: Application Priority - Default 0
+ -queue <arg>              Optional: RM Queue in which this application is to be
+                           submitted - Defaults to 'default'
+ -ZK <arg>                 Required: Comma seperated list of ZK hosts ie -
+                           host1:port,host2:port
+
 ```
 
 ## Example ##
@@ -43,7 +59,7 @@ yarn jar MOYA-CLIENT-0.0.1-SNAPSHOT-jar-with-dependencies.jar org.moya.core.yarn
 ## MOYABeatDown ##
 
 The Client jar also includes the MOYABeatDown class which will load up some KV Pairs and Then get them. 
-org.moya.core.memcached.MOYABeatDown [ZKServerList] [#ofKeysToMake] [OffsetWhenGettingKeys]
+`org.moya.core.memcached.MOYABeatDown [ZKServerList] [#ofKeysToMake] [OffsetWhenGettingKeys]`
 
 * Example which will create 1% misses
 ```
