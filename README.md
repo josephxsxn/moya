@@ -1,10 +1,10 @@
-Memcached on YARN
+Memcached on YARN - Version 0.10-Core Alpha 
 ====
 
 ## Futures ##
-* Configure alloted ram for Demon currently requires a 512mb container to function as 448mb goes to the JMemcachD Deamon
+* Configure alloted ram for **Demon currently requires a 512mb container to function** as 448mb goes to the JMemcachD Deamon
 * Getting containers that die to automatically restart
-* Understand how I can get the Application Master to restart if it dies
+* Get the Application Master to restart if it dies
 * Management of the clients. Currently I have to kill clients through the YARN Cli. 
 
       
@@ -14,9 +14,9 @@ Memcached on YARN
 * Adding in unit tests and sample/test applications 
 * Client Memcached system notification if a server daemon dies. 
 * Have MOYA clean things up if the AM dies or is exited. 
-* Configure Evition Policy, currently set as FIFO
-* Configure Number of Keys to handle, currently set at 1million per Daemon
-
+* Configure Evition Policy, currently set as **FIFO**
+* Configure Number of Keys to handle, currently **set at 1million per Daemon**
+* Migrate paramaters to configeration file 
 
 
 ## Usage ##
